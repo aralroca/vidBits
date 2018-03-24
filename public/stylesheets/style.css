@@ -1,0 +1,122 @@
+body {
+  background-color: #222222;
+  font-family: 'Montserrat', sans-serif;
+  color: #7a797a;
+  text-align: center;
+}
+
+.add-video-button {
+  text-align: center; 
+  background-color: #ff9b34;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-decoration: none;
+  margin: 0 auto;
+  font-size: 16px;
+  width: 100px;
+  display: block;
+}
+
+.title-container {
+  height: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.contents-container {
+  width: 855px;
+  margin: 0 auto;
+}
+
+.video-card {
+  background-color: #ffffff;
+  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.5);
+  margin: 40px;
+}
+
+.video-player {
+  width: 100%;
+  height: 500px;
+}
+
+.video-title {
+  padding: 9px;
+}
+
+/* Add page - form partial*/
+
+form {
+  background-color: white;
+  margin: 0 auto;
+  width: 80%;
+  padding-top: 30px;
+  padding-bottom: 10px;
+}
+
+form input[name=title] {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  margin-top: 5px;
+  width: 75%;
+  border: solid 1px #c9c9c9;
+  background-color: #eeeeee;
+  height: 30px;
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 5px;
+}
+
+form input[name=url] {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 40px;
+  margin-top: 5px;
+  width: 75%;
+  border: solid 1px #c9c9c9;
+  background-color: #eeeeee;
+  height: 30px;
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 5px;
+}
+
+form textarea {
+  display: block;
+  margin: 10px auto;
+  width: 75%;
+  border: solid 1px #c9c9c9;
+  background-color: #eeeeee;
+  height: 100px;
+  font-family: Montserrat;
+  font-size: 16px;
+  padding: 5px;
+}
+
+/* Show page */
+
+.input-button {
+  text-align: center; 
+  background-color: #ff9b34;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-decoration: none;
+  margin: 0 auto;
+  font-size: 16px;
+  width: 166px;
+  display: block;
+}
+
+.video-description {
+  padding: 30px 10px;
+}
+
+
+
+
+
+
+
