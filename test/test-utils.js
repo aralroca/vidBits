@@ -5,9 +5,26 @@ const Video = require('../models/video');
 // Create and return a sample Video object
 const buildVideoObject = (options = {}) => {
   const title = options.title || 'The Jazz hop caffe';
-  const videoUrl = options.imageUrl || 'https://www.youtube.com/watch?v=kPChs1S6s1E';
+  const url = options.url || generateRandomUrl('www.youtube.com');
   const description = options.description || 'Video music for relaxing';
-  return {title, videoUrl, description};
+  return {title, description, url};
+};
+
+// Create video interacting with DOM
+const createVideoViaDOM = () => {
+  const {title, description, url} = buildVideoObject();
+
+  browser.url('/videos/new');
+  browser.setValue('#url-input', url);
+  browser.setValue('#title-input', title);
+  browser.setValue('#description-input', description);
+  browser.click('#submit-button');
+
+  return {title, description, url};
+}
+
+const generateRandomUrl = (domain) => {
+  return `http://${domain}/${Math.random()}`;
 };
 
 // Add a sample Video object to mongodb
@@ -38,7 +55,9 @@ const parseAttributeFromHTML = attribute => (htmlAsString, selector) => {
 
 module.exports = {
   buildVideoObject,
-  seedVideoToDatabase,
-  parseTextFromHTML,
+  createVideoViaDOM,
+  generateRandomUrl,
   parseAttributeFromHTML,
+  parseTextFromHTML,
+  seedVideoToDatabase,
 };

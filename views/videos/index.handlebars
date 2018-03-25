@@ -1,16 +1,19 @@
 <div id="videos-container" class="contents-container">
-  <!-- <div class="video-card">
-    <div class="video-player">
-        <iframe class="video-player" src="https://www.youtube.com/embed/6lutNECOZFw" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <div class="video-title">
-      Excited train guy, New York!
-    </div>
-  </div> -->
   {{#each videos as |video|}}
     <div class="video-card">
+      <div class="video-player">
+        <iframe 
+          class="video-player" 
+          src="{{video.url}}" 
+          frameborder="0" 
+          allowfullscreen
+        >
+        </iframe>
+      </div> 
       <div class="video-title">
-        {{video.title}}
+        <a href="videos/{{video._id}}">
+          {{video.title}}
+        </a>
       </div>
     </div>
   {{/each}}

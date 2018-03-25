@@ -12,8 +12,8 @@ router.get('/videos', async (req, res, next) => {
 });
 
 router.post('/videos', async (req, res, next) => {
-  const { title, description } = req.body;
-  const video = new Video({ title, description });
+  const { title, description, url } = req.body;
+  const video = new Video({ title, description, url });
 
   video.validateSync();
 
@@ -21,8 +21,7 @@ router.post('/videos', async (req, res, next) => {
     res.status(400).render('videos/new', {video});
   } else {
     await video.save();
-    const videos = await Video.find({});
-    res.status(201).render('videos/index', {videos});
+    res.redirect(`/videos/${video._id}`);
   }
 });
 

@@ -1,4 +1,20 @@
 <div id="videos-container" class="contents-container">
-    <h2>{{video.title}}</h2>
-    <h3>{{video.description}}</h3>
+  <div class="video-card">
+
+    <div class="video-title">
+      <h1>{{video.title}}</h1>
+    </div>
+
+    <iframe 
+      class="video-player" 
+      src="{{video.url}}" 
+      frameborder="0" 
+      allowfullscreen
+    >
+    </iframe>
+
+    <div class="video-description">
+      <p>{{video.description}}</p>
+    </div>
+  </div>
 </div>

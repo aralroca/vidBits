@@ -4,13 +4,15 @@ const {buildVideoObject} = require('../test-utils');
 describe('User visits create page', () => {
     describe('posts a new video', () => {
         it('is possible to create a new video', () => {
-          const {title, description} = buildVideoObject();
+          const {title, description, url} = buildVideoObject();
           browser.url('/videos/new');
-    
+          
+          browser.setValue('#url-input', url);
           browser.setValue('#title-input', title);
           browser.setValue('#description-input', description);
           browser.click('#submit-button');
-    
+          
+          assert.include(browser.getAttribute('iframe', 'src'), url);
           assert.include(browser.getText('body'), title);
         });
 

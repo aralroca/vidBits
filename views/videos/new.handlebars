@@ -1,6 +1,19 @@
 <div id="videos-container" class="contents-container">
     <h2>Save a video</h2>
     <form class="input-form" action="/videos" method="post" >
+      <label for="url-input" class="form-label">URL</label>
+      <input
+        value="{{video.url}}"
+        id="url-input"
+        name="url"
+        type="text"
+        placeholder="Write a video URL"
+       />
+      {{#with video.errors.url as |error|}}
+          <div class="error">
+            {{error.message}}
+          </div>
+      {{/with}}
       <label for="title-input" class="form-label">Title</label>
       <input 
           value="{{video.title}}"
@@ -26,6 +39,7 @@
             {{error.message}}
           </div>
       {{/with}}
+      
       <button id="submit-button" class="input-button" type="submit">
         <p>Submit</p>
       </button>
