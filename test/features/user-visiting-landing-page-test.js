@@ -8,9 +8,9 @@ describe('User visits landing page', () => {
         });
     });
     describe('Click on a link to navigate', () => {
-        it('to create.html from landing page', () => {
+        it('to create video from landing page', () => {
             browser.url('/');
-            browser.click('a[href="videos/create.html"]');
+            browser.click('a[href="videos/new"]');
             assert.include(browser.getText('body'), 'Save a video');
         });
     });

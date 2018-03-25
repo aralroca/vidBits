@@ -114,9 +114,7 @@ form textarea {
   padding: 30px 10px;
 }
 
-
-
-
-
-
-
+.error {
+  color: red;
+  font-style: italic
+}
