@@ -34,5 +34,14 @@ describe('User visits landing page', () => {
             browser.click('a[href="videos/new"]');
             assert.include(browser.getText('body'), 'Save a video');
         });
+        it('to edit some video page', () => {
+            createVideoViaDOM();
+
+            browser.url('/videos');
+            browser.click('.video-title a');
+            browser.click('#edit-button')
+            
+            assert.include(browser.getText('#videos-container'), 'Edit video');
+        });
     });
 });

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 const env = process.env.NODE_ENV || 'development';
-const databaseUrl = process.env.DATABASE_URL || `mongodb://localhost/gather_${env}`;
+const databaseUrl = process.env.DATABASE_URL || `mongodb://localhost/vidBits_${env}`;
 const options= {
   useMongoClient: true,
 };

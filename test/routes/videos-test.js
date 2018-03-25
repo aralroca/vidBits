@@ -151,20 +151,41 @@ describe('Server path: /videos', () => {
 describe('Server path: /videos/:id', () => {
   const videoToCreate = buildVideoObject();
 
- beforeEach(connectDatabase);
+  beforeEach(connectDatabase);
 
- afterEach(disconnectDatabase);
+  afterEach(disconnectDatabase);
 
- describe('GET', () => {
-  it('renders the video', async () => {
-    const video = await seedVideoToDatabase();
+  describe('GET', () => {
+    it('renders the video', async () => {
+      const video = await seedVideoToDatabase();
 
-    const response = await request(app)
-      .get(`/videos/${video._id}`);
+      const response = await request(app)
+        .get(`/videos/${video._id}`);
 
-    assert.include(parseTextFromHTML(response.text, 'body'), video.title);
-    assert.include(parseTextFromHTML(response.text, 'body'), video.description);
-    assert.include(parseAttributeFromHTML('src')(response.text, 'iframe'), video.url);
+      assert.include(parseTextFromHTML(response.text, 'body'), video.title);
+      assert.include(parseTextFromHTML(response.text, 'body'), video.description);
+      assert.include(parseAttributeFromHTML('src')(response.text, 'iframe'), video.url);
+    });
   });
 });
+
+describe('Server path: /videos/:id/edit', () => {
+  const videoToCreate = buildVideoObject();
+
+  beforeEach(connectDatabase);
+
+  afterEach(disconnectDatabase);
+
+  describe('GET', () => {
+    it('renders the form for update a video', async () => {
+      const video = await seedVideoToDatabase();
+
+      const response = await request(app)
+        .get(`/videos/${video._id}/edit`);
+
+      assert.include(getValue(response.text, '#title-input'), video.title);
+      assert.include(getValue(response.text, '#description-input'), video.description);
+      assert.include(getValue(response.text, '#url-input'), video.url);
+    });
+  });
 });
