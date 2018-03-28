@@ -61,4 +61,13 @@ router.post('/videos/:id/updates', async (req, res, next) => {
   }
 });
 
+router.post('/videos/:id/deletions', async (req, res, next) => {
+  try {
+    await Video.findByIdAndRemove(req.params.id);
+  } catch(e){}
+  finally{
+    res.redirect('/videos');
+  }
+});
+
 module.exports = router;

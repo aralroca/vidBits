@@ -5,6 +5,13 @@
       <h1>{{video.title}}</h1>
     </div>
 
+    <form method="get" action="/videos/{{video._id}}/edit">
+        <input type="submit" value="Edit" id="edit-button" class="input-button">
+    </form>
+    <form method="post" action="/videos/{{video._id}}/deletions">
+        <input type="submit" value="Delete" id="delete" class="input-button">
+    </form>
+
     <iframe 
       class="video-player" 
       src="{{video.url}}" 
@@ -16,13 +23,5 @@
     <div class="video-description">
       <p>{{video.description}}</p>
     </div>
-
-    <a 
-      id="edit-button" 
-      class="input-button" 
-      href="/videos/{{video._id}}/edit"
-      >
-      Edit
-    </a>
   </div>
 </div>

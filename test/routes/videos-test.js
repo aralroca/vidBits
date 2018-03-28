@@ -14,7 +14,7 @@ const {connectDatabase, disconnectDatabase} = require('../database-utilities');
 const getValue = parseAttributeFromHTML('value');
 
 describe('Server path: /videos', () => {
-    const videoToCreate = buildVideoObject();
+   const videoToCreate = buildVideoObject();
   
    beforeEach(connectDatabase);
   
@@ -22,19 +22,21 @@ describe('Server path: /videos', () => {
   
    describe('GET', () => {
     it('renders all videos from the database', async () => {
+      // Setup
       const firstVideo = await seedVideoToDatabase({title: 'Video1'});
       const secondVideo = await seedVideoToDatabase({title: 'Video2'});
 
+      // Exercise
       const response = await request(app)
         .get('/videos');
 
+      // Verification
       assert.include(parseTextFromHTML(response.text, '#videos-container'), firstVideo.title);
       assert.include(parseTextFromHTML(response.text, '#videos-container'), secondVideo.title);
     });
   });
   
     describe('POST', ()=> {
-
       it('redirect to the view page after the creation', async () => {
         const response = await request(app)
             .post('/videos')
@@ -149,10 +151,7 @@ describe('Server path: /videos', () => {
 });
 
 describe('Server path: /videos/:id', () => {
-  const videoToCreate = buildVideoObject();
-
   beforeEach(connectDatabase);
-
   afterEach(disconnectDatabase);
 
   describe('GET', () => {
@@ -170,10 +169,7 @@ describe('Server path: /videos/:id', () => {
 });
 
 describe('Server path: /videos/:id/edit', () => {
-  const videoToCreate = buildVideoObject();
-
   beforeEach(connectDatabase);
-
   afterEach(disconnectDatabase);
 
   describe('GET', () => {
@@ -192,10 +188,7 @@ describe('Server path: /videos/:id/edit', () => {
 
 
 describe('Server path: /videos/:id/updates', () => {
-  const videoToCreate = buildVideoObject();
-
   beforeEach(connectDatabase);
-
   afterEach(disconnectDatabase);
 
   describe('POST', () => {
@@ -272,6 +265,35 @@ describe('Server path: /videos/:id/updates', () => {
       
         assert.equal(response.status, 302);
         assert.equal(response.headers.location, `/videos/${oldVideo._id}`);
+    });
+  });
+});
+
+describe('Server path: /videos/:id/deletions', () => {
+  beforeEach(connectDatabase);
+  afterEach(disconnectDatabase);
+
+  describe('POST', () => {
+    it('delete the video', async () => {
+        const video = await seedVideoToDatabase();
+
+        const response = await request(app)
+          .post(`/videos/${video._id}/deletions`)
+          .type('form');
+
+        const videos = await Video.find({});
+        assert.strictEqual(videos.length, 0);
+    });
+
+    it('redirects home', async () => {
+      const video = await seedVideoToDatabase();
+
+      const response = await request(app)
+        .post(`/videos/${video._id}/deletions`)
+        .type('form');
+
+      assert.equal(response.status, 302);
+      assert.equal(response.headers.location, '/videos');
     });
   });
 });
