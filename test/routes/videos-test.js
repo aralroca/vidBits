@@ -189,3 +189,89 @@ describe('Server path: /videos/:id/edit', () => {
     });
   });
 });
+
+
+describe('Server path: /videos/:id/updates', () => {
+  const videoToCreate = buildVideoObject();
+
+  beforeEach(connectDatabase);
+
+  afterEach(disconnectDatabase);
+
+  describe('POST', () => {
+    it('save the existing video with the new data', async () => {
+      const oldVideo = await seedVideoToDatabase();
+      const newVideo = buildVideoObject({ title: 'New title!' });
+
+      const response = await request(app)
+        .post(`/videos/${oldVideo._id}/updates`)
+        .type('form')
+        .send(newVideo);
+
+      const videoFound = await Video.findById(oldVideo._id);
+
+      assert.strictEqual(oldVideo._id.toString(), videoFound._id.toString());
+      assert.strictEqual(newVideo.title, videoFound.title);
+      assert.strictEqual(newVideo.description, videoFound.description);
+      assert.strictEqual(newVideo.url, videoFound.url);
+    });
+
+    it('should not possible to update an empty title', async () => {
+      const oldVideo = await seedVideoToDatabase();
+      const newVideo = buildVideoObject();
+
+      newVideo.title = undefined;
+
+      const response = await request(app)
+        .post(`/videos/${oldVideo._id}/updates`)
+        .type('form')
+        .send(newVideo);
+
+      assert.equal(response.status, 400);
+      assert.include(parseTextFromHTML(response.text, 'form'), 'Title is required');
+    });
+
+    it('should not possible to update an empty description', async () => {
+      const oldVideo = await seedVideoToDatabase();
+      const newVideo = buildVideoObject();
+
+      newVideo.description = undefined;
+
+      const response = await request(app)
+        .post(`/videos/${oldVideo._id}/updates`)
+        .type('form')
+        .send(newVideo);
+      
+      assert.equal(response.status, 400);
+      assert.include(parseTextFromHTML(response.text, 'form'), 'Description is required');
+    });
+
+    it('should not possible to update an empty url', async () => {
+      const oldVideo = await seedVideoToDatabase();
+      const newVideo = buildVideoObject();
+
+      newVideo.url = undefined;
+
+      const response = await request(app)
+        .post(`/videos/${oldVideo._id}/updates`)
+        .type('form')
+        .send(newVideo);
+      
+      assert.equal(response.status, 400);
+      assert.include(parseTextFromHTML(response.text, 'form'), 'a URL is required');
+    });
+
+    it('should redirect to show page', async () => {
+      const oldVideo = await seedVideoToDatabase();
+      const newVideo = buildVideoObject({ title: 'New title!' });
+
+      const response = await request(app)
+        .post(`/videos/${oldVideo._id}/updates`)
+        .type('form')
+        .send(newVideo);
+      
+        assert.equal(response.status, 302);
+        assert.equal(response.headers.location, `/videos/${oldVideo._id}`);
+    });
+  });
+});
