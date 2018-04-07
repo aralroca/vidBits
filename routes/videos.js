@@ -2,16 +2,16 @@ const router = require('express').Router();
 
 const Video = require('../models/video');
 
-router.get('/', (req, res, next) => {
+router.get('/', (req, res) => {
   res.redirect('/videos');
 })
 
-router.get('/videos', async (req, res, next) => {
+router.get('/videos', async (req, res) => {
   const videos = await Video.find({});
   res.render('videos/index', {videos});
 });
 
-router.post('/videos', async (req, res, next) => {
+router.post('/videos', async (req, res) => {
   const { title, description, url } = req.body;
   const video = new Video({ title, description, url });
 
@@ -25,21 +25,21 @@ router.post('/videos', async (req, res, next) => {
   }
 });
 
-router.get('/videos/new', async (req, res, next) => {
+router.get('/videos/new', async (req, res) => {
   res.render('videos/new');
 });
 
-router.get('/videos/:id', async (req, res, next) => {
+router.get('/videos/:id', async (req, res) => {
   const video = await Video.findById(req.params.id);
   res.render('videos/show', {video});
 });
 
-router.get('/videos/:id/edit', async (req, res, next) => {
+router.get('/videos/:id/edit', async (req, res) => {
   const video = await Video.findById(req.params.id);
   res.render('videos/edit', {video});
 });
 
-router.post('/videos/:id/updates', async (req, res, next) => {
+router.post('/videos/:id/updates', (req, res) => {
   const { title, description, url } = req.body;
   const video = new Video({ title, description, url });
 
@@ -61,7 +61,7 @@ router.post('/videos/:id/updates', async (req, res, next) => {
   }
 });
 
-router.post('/videos/:id/deletions', async (req, res, next) => {
+router.post('/videos/:id/deletions', async (req, res) => {
   try {
     await Video.findByIdAndRemove(req.params.id);
   } catch(e){}
